@@ -1,8 +1,14 @@
+/*
+This is Javascript file consists of the logic which is used by the application
+ */
 const currency = '$';
 const attachedKey = 'key';
 const redis =require('redis')
 const client = redis.createClient();
 
+/*
+The method makeDeposit is to make deposits into the bank account.
+ */
 makeDeposit = function (req,res,moneyToBeDeposited) {
     let user = req.session.key;
     client.hget(user, 'Deposits' , function (err, existingBalance) {
@@ -18,6 +24,10 @@ makeDeposit = function (req,res,moneyToBeDeposited) {
      });
 }
 
+
+/*
+This method makeWithdrawl is to withdraw amount from the existing bank account.
+ */
 makeWithdrwal = function (req,res,moneyToBeWithdrawn) {
     let user = req.session.key;
     client.hget(user, 'Deposits' , function (err, existingBalance) {
@@ -39,6 +49,9 @@ makeWithdrwal = function (req,res,moneyToBeWithdrawn) {
 
 }
 
+/*
+This method checkTransaction fetches history of transactions made in your account.
+*/
 checkTransaction = function (req,res) {
     var user = req.session.key;
     client.lrange(user + attachedKey, 0, -1, function (err, responseArray) { //outputs the array
@@ -65,6 +78,9 @@ checkTransaction = function (req,res) {
     });
 }
 
+/*
+This method checkBalance is used to check balance in the existing bank account.
+ */
 checkBalance = function (req,res) {
     let user = req.session.key;
     client.hget(user, 'Deposits' , function (err, response) {

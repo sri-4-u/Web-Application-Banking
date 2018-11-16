@@ -38,16 +38,18 @@ app.use(cookieParser());
 //set view engine
 app.set('view engine', 'ejs');
 
+//set client side path
 app.use(express.static('client'));
+
 //set routes
 require('./server/routes')(app,client,bcrypt);
 
-//starts redis
+//start redis
 client.on('connect', function () {
     console.log('redis is connected');
 });
 
-//http port
+//listen via http port
 app.listen(port, function (err) {
     if (err)
         return console.log('Error Occurred');

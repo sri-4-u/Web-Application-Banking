@@ -1,5 +1,6 @@
 app.service('BankService',['$http',function ($http) {
     var BASE_URL = '/profile';
+
     //makes http call to the server for checking balance
     this.checkBalance = function() {
         var url = BASE_URL + '/checkBalance';

@@ -49,21 +49,37 @@ module.exports = function(app,client,bcrypt) {
     });
 
     app.post('/signup',function (req,res) {
+        var regexUsername = RegExp('^[A-Za-z0-9_.]{3,12}$');
+        var regexPassword = RegExp('^[A-Za-z0-9_.@#$*()!^]{6,20}$');
         var user = req.body.username;
         var password = req.body.password;
-        client.exists(user,function (err,reply) {
-            if(err)
-                throw err;
-            else if(reply ===1){
-                req.flash('signupMessage','Username already exists ... Pick another one');
-                res.redirect('/signup');
-            }
-            else {
-                req.session.key = user;
-                client.hmset(req.session.key,'Password',bcrypt.hashSync(password,null,null),'Deposits',parseInt(0));
-                res.redirect('/profile');
-            }
-        });
+        if(false === regexUsername.test(user) && false === regexPassword.test(password)){ //checks if both username and password are invalid
+            req.flash('signupMessage', 'Both username and password are invalid ... Please see the rules below');
+            res.redirect('/signup');
+        }
+        else if(false === regexUsername.test(user)){ //check if username is invalid
+            req.flash('signupMessage', 'Invalid username ... Please see the rules below');
+            res.redirect('/signup');
+        }
+        else if(false === regexPassword.test(password)){ //check if password is invalid
+            req.flash('signupMessage', 'Invalid password ... Please see the rules below');
+            res.redirect('/signup');
+        }
+        else {
+            client.exists(user, function (err, reply) { //if everything is valid
+                if (err)
+                    throw err;
+                else if (reply === 1) {
+                    req.flash('signupMessage', 'Username already exists ... Pick another one');
+                    res.redirect('/signup');
+                }
+                else {
+                    req.session.key = user;
+                    client.hmset(req.session.key, 'Password', bcrypt.hashSync(password, null, null), 'Deposits', parseInt(0));
+                    res.redirect('/profile');
+                }
+            });
+        }
     });
 
     //==================PROFILE=============
@@ -79,6 +95,7 @@ module.exports = function(app,client,bcrypt) {
         }
     });
 
+    //route for making deposit
     app.get('/profile/deposit',function (req,res) {
         if(req.session !=null && req.session){
             var moneyToBeDeposited = parseInt(req.query.depositMoney);
@@ -86,6 +103,7 @@ module.exports = function(app,client,bcrypt) {
         }
     });
 
+    //route for making withdrawl
     app.get('/profile/withdraw',function (req,res) {
         if(req.session !=null && req.session){
             var moneyToBeWithdrawn = parseInt(req.query.withdrawMoney);
@@ -93,18 +111,21 @@ module.exports = function(app,client,bcrypt) {
         }
     });
 
+    //route for checking balance
     app.get('/profile/checkBalance',function (req,res) {
         if(req.session !=null && req.session){
             checkBalance(req,res);
         }
     });
 
+    //check for transaction history
     app.get('/profile/checkTransactions',function (req,res) {
         if(req.session !=null && req.session){
             checkTransaction(req,res);
         }
     });
 
+    //render transaction table page
     app.get('/transaction',function (req,res) {
         if(req.session){
             //Only if session exists, this page will be appeared, otherwise redirected to main page

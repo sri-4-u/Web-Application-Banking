@@ -1,5 +1,6 @@
 app.controller('BankAccountController', function($scope, BankService,$timeout){
 
+    //function handling balance
     $scope.checkBalance = function () {
         BankService.checkBalance().then(function(response){
             $scope.balance = response.data;
@@ -9,6 +10,7 @@ app.controller('BankAccountController', function($scope, BankService,$timeout){
         },300)
     };
 
+    //function handling deposits
     $scope.deposit = function () {
         var reg = /^\d+(\.\d{1,2})?$/;
         $scope.messageDisplayDeposit = false;
@@ -31,6 +33,7 @@ app.controller('BankAccountController', function($scope, BankService,$timeout){
         $scope.moneyToDeposit ='';
     }
 
+    //function handling the withdrawls
     $scope.withdraw = function () {
         var reg = /^\d+(\.\d{1,2})?$/;
         $scope.messageDisplayWithdraw = false;
@@ -60,6 +63,7 @@ app.controller('BankAccountController', function($scope, BankService,$timeout){
         $scope.moneyToWithdraw ='';
     }
 
+    //function handling transactions
     $scope.checkTransaction =function () {
         BankService.checkTransactions().then(function (response) {
             console.log(response.status);
