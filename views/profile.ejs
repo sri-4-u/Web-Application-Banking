@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome </title>
+    <link rel="shortcut icon" href="" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <style>
+        body { padding-top:80px; word-wrap:break-word; }
+    </style>
+</head>
+<body  ng-app ="BankAccount" data-ng-controller ="BankAccountController">
+<div class="container">
+
+    <div class="row">
+        <div style="float: right">
+            <a href="/profile" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> <%= username %></a>
+            <a href="/logout" class="btn btn-danger"><span class="glyphicon glyphicon-off"></span> Logout</a>
+        </div>
+        <button href="/profile" class="btn btn-primary" type="button">Refresh</button>
+        <button href="/transaction" class="btn btn-info" type="button">Transaction History</button>
+    </div>
+</div>
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+
+    <div class="container">
+        <div class="row">
+            <div style="float: right">
+        <p data-ng-model="balance"> Current Balance is: {{balance}}</p>
+            </div>
+        </div>
+    </div>
+
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form ng-submit="deposit()">
+                <input type="text" data-ng-model="moneyToDeposit" />
+                <input type="submit" id="deposit" value="Deposit Money" />
+                <p ng-show="messageDisplayDeposit" class="alert alert-success">{{messageDeposit}}</p>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form ng-submit="withdraw()">
+                <input type="text" data-ng-model="moneyToWithdraw" />
+                <input type="submit" id="deposit" value="Withdraw Money" />
+                <p ng-show="messageDisplayWithdraw" class="alert alert-success">{{messageWithdraw}}</p>
+            </form>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="app.js"></script>
+<script src="controller/angular-controller.js"></script>
+<script src="service/angular-service.js"></script>
+</html>
