@@ -14,48 +14,44 @@
 </head>
 <body  ng-app ="BankAccount" data-ng-controller ="BankAccountController">
 <div class="container">
-
     <div class="row">
         <div style="float: right">
             <a href="/profile" class="btn btn-info"><span class="glyphicon glyphicon-user"></span> <%= username %></a>
             <a href="/logout" class="btn btn-danger"><span class="glyphicon glyphicon-off"></span> Logout</a>
         </div>
         <button href="/profile" class="btn btn-primary" type="button">Refresh</button>
-        <button href="/transaction" class="btn btn-info" type="button">Transaction History</button>
+        <a href="/transaction" class="btn btn-info" type="button">Transaction History</a>
     </div>
 </div>
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
-
-    <div class="container">
-        <div class="row">
-            <div style="float: right">
-        <p data-ng-model="balance"> Current Balance is: {{balance}}</p>
-            </div>
-        </div>
-    </div>
-
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
-
-    <div class="container">
+&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;
+&nbsp;&nbsp;
+<div class="container">
     <div class="row">
         <div class="col-md-4">
             <form ng-submit="deposit()">
                 <input type="text" data-ng-model="moneyToDeposit" />
-                <input type="submit" id="deposit" value="Deposit Money" />
+                <button class= "btn btn-primary" type="submit">Deposit Money</button>
                 <p ng-show="messageDisplayDeposit" class="alert alert-success">{{messageDeposit}}</p>
+                <p ng-show="errormessageDisplayDeposit" class="alert alert-danger">{{messagefailDepositMessage}}</p>
             </form>
         </div>
         <div class="col-md-4">
             <form ng-submit="withdraw()">
                 <input type="text" data-ng-model="moneyToWithdraw" />
-                <input type="submit" id="deposit" value="Withdraw Money" />
+                <button class= "btn btn-primary" type="submit">Withdraw Money</button>
                 <p ng-show="messageDisplayWithdraw" class="alert alert-success">{{messageWithdraw}}</p>
+                <p ng-show="errormessageDisplayWithdraw" class="alert alert-danger">{{messagefailWithdrawMessage}}</p>
             </form>
         </div>
+        <div class="col-md-4">
+            <div style="float: right">
+                <button class= "btn btn-primary" data-ng-model="balance">Current Balance is: {{balance}}</button>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
 </body>
 <script src="app.js"></script>
 <script src="controller/angular-controller.js"></script>

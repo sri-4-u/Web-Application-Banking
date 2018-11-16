@@ -105,6 +105,18 @@ module.exports = function(app,client,bcrypt) {
         }
     });
 
+    app.get('/transaction',function (req,res) {
+        if(req.session){
+            //Only if session exists, this page will be appeared, otherwise redirected to main page
+            res.render('transaction.ejs',{
+                username:req.session.key
+            });
+        }
+        else {
+            res.redirect('/');
+        }
+    });
+
     //==================LOGOUT==============
     app.get('/logout',function (req,res) {
         req.session.destroy(function (err) {
